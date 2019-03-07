@@ -2,10 +2,26 @@ from __future__ import division
 
 import sys
 import numpy as np
-
 import operator
-
 import hashlib
+
+# To solve this problem in synthesis we have implemented an heuristic with some intuitions:
+# Seeing that taking 2 images, more tags have more is probable that the min of the max of the 3 parameters to evaluate is higher,
+# we first ordered all the images in a decreasing order of number of tags and we try to associated an image starting from the first after that image
+# to a fixed number of next images and then we take the best one ( the one that maximize the min of 3 parameters).
+# We choose to select this window of next images for a complexity problem in the bigger dataset and because in principle more are distant 2 images (distance =| number of tag1 - number of tag2 |) 
+# more is proable that the evaluation (max of min) is lower 
+# To put together the vertical images we adopt a simple strategy, after having ordered in decreasing order the vertical images by the number of tags we put together
+# the first 1 with the one that maximize the total number of tags in the final image. 
+# As before for a problem of complexity we set a window to search the right one. We do this stuff with Vertical images before start to computing the slideshow
+# To exclude some images while we are searching the best one in the window, we use a simple Upper Bound that is the 1/2*min(TagImage1,TagImage2) that is the best that can do 2 nearby images
+
+# SCORE      : 708,657 
+# SCORE AFTER: 988,295
+# BEST SCORE : 1,255,321
+
+windowVertical = 1000
+windowSlideShow = 1000
 
 class Photo():
     def __init__(self, idPhoto, photo_type, num_tags, tags):
@@ -75,7 +91,7 @@ def adjustVerticalList(verticalPhotos):
 
         current_best_index = 0
 
-        for indexVerticalPhoto in range(0, min(1000, len(verticalPhotos))):
+        for indexVerticalPhoto in range(0, min(windowVertical, len(verticalPhotos))):
             current_second_vertical = verticalPhotos[indexVerticalPhoto]
             slide = Slide([current_first_vertical, current_second_vertical])
             current_best_max = len(slide.tags)
@@ -99,11 +115,7 @@ def horizontalPhotosToSlide(horizontalPhotos):
 def main():
     num_collections, photos = parse_input(sys.argv[1])
 
-    #print_photos(photos)
-    #print("\n")
-
     photos = sorted(photos, key=operator.attrgetter('num_tags'), reverse = True)
-    #print_photos(photos)
 
     slides = []
     slides.extend(horizontalPhotosToSlide(list(filter(lambda r: r.photo_type == 'H', photos))))
@@ -119,7 +131,7 @@ def main():
         best_index_min = 0
         best_min = 0
 
-        for current_index in range(0, min(len(slides), 1000)):
+        for current_index in range(0, min(len(slides), windowSlideShow)):
             slide = slides[current_index]
             upper_bound = min(len(current_slide.tags), len(slide.tags)) / 2
             if upper_bound > best_min:
