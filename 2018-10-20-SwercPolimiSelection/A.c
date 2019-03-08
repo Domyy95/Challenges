@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
+
+// is easy after you notice that each odd window can interacts only with the next one
 int main(int argc, char* argv[]) {
 	
 	int N, H, W, sum, prev, next, area = 0;
