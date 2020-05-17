@@ -4,7 +4,6 @@ You are given two numbers X and N. Your task is to find the last digit of the fo
 X ** ((N!)%10) 
 '''
 
-
 X,N = map(int, input().split())
 
 if N == 2:
