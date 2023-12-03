@@ -1,4 +1,4 @@
-from common_code import read_file_lines, extract_k_len_substr
+from common_code import read_file_lines
 
 """ Problem 1
 The newly-improved calibration document consists of lines of text; each line originally contained a specific calibration value that the Elves now need to recover. On each line, the calibration value can be found by combining the first digit and the last digit (in that order) to form a single two-digit number.
@@ -35,63 +35,19 @@ def extract_calibration_value_numbers(word):
 """ Problem 2
 Your calculation isn't quite right. It looks like some of the digits are actually spelled out with letters: one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
 """
-words_to_number = {
-    "zero": "0",
-    "one": "1",
-    "two": "2",
-    "three": "3",
-    "four": "4",
-    "five": "5",
-    "six": "6",
-    "seven": "7",
-    "eight": "8",
-    "nine": "9"
-}
+spelled_numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 def extract_calibration_value(word):
-    first_digit = ""
-    last_digit = ""
-    len_word = len(word)
-
-    # Find the first digit
-    for i, char in enumerate(word):
-        substrs = extract_k_len_substr(word[0:i], 3)
-        substrs += extract_k_len_substr(word[0:i], 4)
-        substrs += extract_k_len_substr(word[0:i], 5)
-        for substr in substrs:
-            if substr in words_to_number:
-                first_digit = words_to_number[substr]
-                break
-        
-        if first_digit != "":
-            break
-
-        if char.isdigit():
-            first_digit = char
-            break
-        
-    # Find the last digit
-    for i, char in enumerate(reversed(word)):
-        substrs = extract_k_len_substr(word[len_word-i:len_word], 3)
-        substrs += extract_k_len_substr(word[len_word-i:len_word], 4)
-        substrs += extract_k_len_substr(word[len_word-i:len_word], 5)
-        for substr in substrs:
-            if substr in words_to_number:
-                last_digit = words_to_number[substr]
-                break
-        
-        if last_digit != "":
-            break
-
-        if char.isdigit():
-            last_digit = char
-            break
+    for i in range(len(spelled_numbers)):
+        if spelled_numbers[i] in word:
+            word = word.replace(spelled_numbers[i], spelled_numbers[i][0]+ str(i+1) + spelled_numbers[i][-1])
     
-    calibration_value = int(first_digit + last_digit)
-    return calibration_value
+    return extract_calibration_value_numbers(word)
 
 words = read_file_lines("inputs/1.txt")
-sol = 0
+sol1 = 0
+sol2 = 0
 for word in words:
-    # sol+= extract_calibration_value_numbers(word) # Problem 1 solution
-    sol+= extract_calibration_value(word) # Problem 2 solution
-print(sol)
+    sol1+= extract_calibration_value_numbers(word)  # Problem 1 solution
+    sol2+= extract_calibration_value(word)           # Problem 2 solution
+print(sol1)
+print(sol2)
