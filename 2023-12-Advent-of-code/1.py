@@ -48,6 +48,6 @@ sol1 = 0
 sol2 = 0
 for word in words:
     sol1+= extract_calibration_value_numbers(word)  # Problem 1 solution
-    sol2+= extract_calibration_value(word)           # Problem 2 solution
+    sol2+= extract_calibration_value(word)          # Problem 2 solution
 print(sol1)
 print(sol2)
