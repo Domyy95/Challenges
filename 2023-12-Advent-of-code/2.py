@@ -1,4 +1,3 @@
-from common_code import read_file_lines
 import math
 
 """ Problem 1 
@@ -21,22 +20,6 @@ The Elf would first like to know which games would have been possible if the bag
 
 In the example above, games 1, 2, and 5 would have been possible if the bag had been loaded with that configuration. However, game 3 would have been impossible because at one point the Elf showed you 20 red cubes at once; similarly, game 4 would also have been impossible because the Elf showed you 15 blue cubes at once. If you add up the IDs of the games that would have been possible, you get 8.
 """
-COLOURS = {
-    "red": 12,
-    "green": 13,
-    "blue": 14
-}
-
-def parse_game(game):
-    extractions = game.split(":")[1].split(";")
-    for extraction in extractions:
-        colors = extraction.split(",")
-        for color in colors:
-            n, c = color.strip().split(" ")
-            if COLOURS[c] < int(n):
-                return False
-    
-    return True
 
 """ Problem 2
 As you continue your walk, the Elf poses a second question: in each game you played, what is the fewest number of cubes of each color that could have been in the bag to make the game possible?
@@ -58,33 +41,37 @@ The power of a set of cubes is equal to the numbers of red, green, and blue cube
 For each game, find the minimum set of cubes that must have been present. What is the sum of the power of these sets?
 """
 
-def parse_game_min_colors(game):
+COLOURS = {"red": 12, "green": 13, "blue": 14}
+
+
+def parse_game(game):
     colours_min = {k: 0 for k in list(COLOURS.keys())}
     extractions = game.split(":")[1].split(";")
+    fit = True
     for extraction in extractions:
         colors = extraction.split(",")
         for color in colors:
             n, c = color.strip().split(" ")
             n = int(n)
-            if(n != 0 and n > colours_min[c]):
+            if n != 0 and n > colours_min[c]:
                 colours_min[c] = n
-    
-    return True, colours_min
 
-games = read_file_lines("inputs/2.txt")
+            if COLOURS[c] < int(n):
+                fit = False
 
-# Sol 1
-result = 0
+    return fit, colours_min
+
+
+with open("inputs/2.txt", "r") as file:
+    games = file.read().splitlines()
+
+
+result1 = 0
+result2 = 0
 for i, game in enumerate(games):
-    winning = parse_game(game)
+    winning, colours = parse_game(game)
     if winning:
-        result += i+1
-print(result)
-
-# Sol 2
-result = 0
-for i, game in enumerate(games):
-    winning, colours = parse_game_min_colors(game)
-    if winning:
-        result += math.prod(colours.values())
-print(result)
+        result1 += i + 1
+        result2 += math.prod(colours.values())
+print(f"Solution 1: {result1}")
+print(f"Solution 2: {result2}")

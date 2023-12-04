@@ -1,5 +1,3 @@
-from common_code import read_file_lines
-
 """ Problem 1 
 The Elf leads you over to the pile of colorful cards. There, you discover dozens of scratchcards, all with their opaque covering already scratched off. Picking one up, it looks like each card has two lists of numbers separated by a vertical bar (|): a list of winning numbers and then a list of numbers you have. You organize the information into a table (your puzzle input).
 
@@ -24,15 +22,6 @@ So, in this example, the Elf's pile of scratchcards is worth 13 points.
 
 Take a seat in the large pile of colorful cards. How many points are they worth in total?
 """
-
-def card_evaluation(card):
-    extractions = card.split(":")[1].split("|")[0].strip().split(" ")
-    extractions = list(filter(None, extractions)) # remove empty strings
-    my_numbers = card.split(":")[1].split("|")[1].strip().split(" ")
-    my_numbers = list(filter(None, my_numbers)) # remove empty strings
-    winning_numbers = list(filter(extractions.__contains__, my_numbers))
-
-    return winning_numbers
 
 """ Problem 2
 Just as you're about to report your findings to the Elf, one of you realizes that the rules have actually been printed on the back of every card this whole time.
@@ -62,17 +51,29 @@ Once all of the originals and copies have been processed, you end up with 1 inst
 Process all of the original and copied scratchcards until no more scratchcards are won. Including the original set of scratchcards, how many total scratchcards do you end up with?
 """
 
-cards = read_file_lines("inputs/4.txt")
+
+def card_evaluation(card):
+    extractions = card.split(":")[1].split("|")[0].strip().split(" ")
+    extractions = list(filter(None, extractions))  # remove empty strings
+    my_numbers = card.split(":")[1].split("|")[1].strip().split(" ")
+    my_numbers = list(filter(None, my_numbers))  # remove empty strings
+    winning_numbers = list(filter(extractions.__contains__, my_numbers))
+
+    return winning_numbers
+
+
+with open("inputs/4.txt", "r") as file:
+    cards = file.read().splitlines()
 
 # Sol 1,2
 result1 = 0
 result2 = [1] * len(cards)
 for i, card in enumerate(cards):
     winning = card_evaluation(card)
-    result1 += 2**(len(winning) - 1) if len(winning) > 0 else 0
+    result1 += 2 ** (len(winning) - 1) if len(winning) > 0 else 0
     if winning:
         for j in range(1, len(winning) + 1):
             result2[i + j] += result2[i]
-       
-print(result1)
-print(sum(result2))
+
+print(f"Solution 1: {result1}")
+print(f"Solution 2: {sum(result2)}")
