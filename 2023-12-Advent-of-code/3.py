@@ -111,6 +111,7 @@ def find_number_around(matrix, number_i, number_cols, symbol_i, symbol_j):
             and matrix[i][j].isdigit()
         ):
             result = matrix[i][j]
+
             # left
             z = 1
             while j - z >= 0 and matrix[i][j - z].isdigit():
@@ -145,7 +146,6 @@ def solve_matrix_mul(matrix, symbol="*"):
                 other_number = find_number_around(
                     matrix, i, pos_to_check, adjacent[0], adjacent[1]
                 )
-                # print(other_number, new_number)
                 solution += int(new_number) * other_number
             col += 1
 
