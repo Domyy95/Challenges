@@ -62,9 +62,10 @@ Norrath to Arbre = 135
 Straylight to Arbre = 127
 """
 
-# Compute all the minimum distances from a node to all the other nodes
+
+# Compute all the minimum distances from a node to all the other nodes
 def dijkstra(graph, start):
-    distances = {node: float('infinity') for node in graph}
+    distances = {node: float("infinity") for node in graph}
     distances[start] = 0
     unvisited_nodes = list(graph.keys())
 
@@ -80,34 +81,35 @@ def dijkstra(graph, start):
 
     return distances
 
+
 def parse_input(input):
     graph = {}
 
     for line in input.strip().splitlines():
         city1, _, city2, _, distance = line.split(" ")
-        
+
         if city1 not in graph:
             graph[city1] = {}
         if city2 not in graph:
             graph[city2] = {}
-        
+
         graph[city1][city2] = int(distance)
         graph[city2][city1] = int(distance)
 
     return graph
-        
+
 
 graph = parse_input(input)
-min_solution = float('infinity')
+min_solution = float("infinity")
 for city in graph:
     distances = dijkstra(graph, city)
-    # print(distances, max(distances.values()))
+    # print(distances, max(distances.values()))
     min_solution = min(min_solution, max(distances.values()))
-    
-print("dijkstra solution 1: ", min_solution) 
+
+print("dijkstra solution 1: ", min_solution)
 
 # I have to find the shortest path that visits all the nodes not the minimum distance from a node to all the other nodes
-# I have to solve a Travelling Salesman Problem (TSP) https://en.wikipedia.org/wiki/Travelling_salesman_problem
+# I have to solve a Travelling Salesman Problem (TSP) https://en.wikipedia.org/wiki/Travelling_salesman_problem
 
 # brute force solution
 from itertools import permutations
@@ -121,7 +123,7 @@ for line in input.strip().splitlines():
     distances.setdefault(source, {})[dest] = int(distance)
     distances.setdefault(dest, {})[source] = int(distance)
 
-shortest = float('infinity')
+shortest = float("infinity")
 longest = 0
 for items in permutations(places):
     dist = sum(map(lambda x, y: distances[x][y], items[:-1], items[1:]))
