@@ -54,33 +54,35 @@ Now, you have to figure out how many ways there are to win this single race. In 
 How many ways can you beat the record in this one much longer race?
 """
 
+
 # wait = w, max_time = T, record_distance = D
 # to win: w*(T-w) > D
-# w^2 - Tw + D < 0 
+# w^2 - Tw + D < 0
 # w = (T +- sqrt(T^2 - 4D))/2
 # The lower w must be rounded up to the nearest integer. If it is an integer, it must be increased by 1
 # The higher w must be rounded down to the nearest integer. if it is an integer, it must be reduced by 1
 def winning_ways(max_time, record_distance):
-    w1 = (max_time + (max_time**2 - 4*record_distance)**0.5)/2
-    w2 = (max_time - (max_time**2 - 4*record_distance)**0.5)/2
+    w1 = (max_time + (max_time**2 - 4 * record_distance) ** 0.5) / 2
+    w2 = (max_time - (max_time**2 - 4 * record_distance) ** 0.5) / 2
 
     if w1 == int(w1):
-        w1-=1
+        w1 -= 1
     else:
         w1 = math.floor(w1)
 
     if w2 == int(w2):
-        w2+=1
+        w2 += 1
     else:
         w2 = math.ceil(w2)
 
-    return w1-w2+1
+    return w1 - w2 + 1
+
 
 # milliseconds
-max_time =[51, 69, 98, 78] 
-# max_time =[7, 15, 30] 
+max_time = [51, 69, 98, 78]
+# max_time =[7, 15, 30]
 
-# millimeters
+# millimeters
 record_distance = [377, 1171, 1224, 1505]
 # record_distance = [9, 40, 200]
 
