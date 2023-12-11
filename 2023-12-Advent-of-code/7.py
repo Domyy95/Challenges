@@ -62,8 +62,10 @@ Using the new joker rule, find the rank of every hand in your set. What are the 
 with open("inputs/7.txt", "r") as file:
     hands = file.read().splitlines()
 
+
 def tiebreaker(hand: str, card_values: str):
     return tuple(card_values.index(c) for c in hand)
+
 
 def hand_to_value(hand: str, with_joker: bool = False):
     hand_values = sorted(Counter(hand).values())
@@ -104,9 +106,8 @@ def solve(with_joker) -> int:
             )
         )
 
-    return sum(
-        (idx + 1) * bid for idx, (_, _, bid) in enumerate(sorted(scored_hands))
-    )
+    return sum((idx + 1) * bid for idx, (_, _, bid) in enumerate(sorted(scored_hands)))
+
 
 solution_1 = solve(with_joker=False)
 solution_2 = solve(with_joker=True)
