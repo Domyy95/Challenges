@@ -1,5 +1,5 @@
 # Problem Statement: https://www.hackerearth.com/challenges/competitive/may-circuits-20/approximate/gotta-serveem-all-deb7cc6d/
-'''
+"""
 There are N people entering a restaurant at different times. These people are numbered from 1 to N by the staffs of the restaurant. 
 There are K chefs working in the restaurant. These chefs are also numbered from 1 to N by the management of the restaurant. 
 A person has to order immediately after he or she enters the restaurant. The arrival time of a person is given in an array A so that the
@@ -12,11 +12,13 @@ Your task is to minimize the sum of the total satisfaction level of all the cust
 Note: Only one chef works to prepare an order of one person. A chef can only prepare one order at a time and a person's order can only 
 be prepared by one chef. Also, if a chef completes preparation of order at time , then he or she can pick up another order and start 
 preparing it at time t+1.
-'''
+"""
 from heapq import heappush, heappop
- 
-class Order():
-    __slots__ = ['index', 'arrival', 'preparation', 'cost']    
+
+
+class Order:
+    __slots__ = ["index", "arrival", "preparation", "cost"]
+
     def __init__(self, index, arrival, preparation, cost):
         self.index = index
         self.arrival = arrival
@@ -27,14 +29,19 @@ class Order():
         # compare 2 orders: self < other <=> self must be served before other
         # cost1: cost of serving self first, then serving other
         cost1self = self.preparation * self.cost
-        cost1other = (max(self.arrival + self.preparation, other.arrival) - other.arrival) * other.cost + other.preparation * other.cost
+        cost1other = (
+            max(self.arrival + self.preparation, other.arrival) - other.arrival
+        ) * other.cost + other.preparation * other.cost
         cost1 = cost1self + cost1other
         # cost2: cost of serving other first, then serving self
         cost2other = other.preparation * other.cost
-        cost2self = (max(other.arrival + other.preparation, self.arrival) - self.arrival) * self.cost + self.preparation * self.cost
+        cost2self = (
+            max(other.arrival + other.preparation, self.arrival) - self.arrival
+        ) * self.cost + self.preparation * self.cost
         cost2 = cost2self + cost2other
         return cost1 < cost2
- 
+
+
 def solve(orders, N, K):
     output = [0] * N
     chefs = []
@@ -50,8 +57,9 @@ def solve(orders, N, K):
         output[order.index] = T
         # chef will be available at max(T, order.arrival) + order.preparation
         heappush(chefs, T + order.preparation)
-    return ' '.join([str(x) for x in output])
- 
+    return " ".join([str(x) for x in output])
+
+
 if __name__ == "__main__":
     N, K = list(map(int, input().strip().split()))
     A = list(map(int, input().strip().split()))  # customer arrival time
@@ -61,7 +69,7 @@ if __name__ == "__main__":
 
     for index, (a, b, c) in enumerate(zip(A, B, C)):
         orders.append(Order(index, a, b, c))
-        
+
     # sort orders in the order in which they will be processed (the 1st chef
     # available will process the next order in the line of orders)
     orders = sorted(orders)

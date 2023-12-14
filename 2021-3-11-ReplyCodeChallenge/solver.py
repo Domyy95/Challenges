@@ -29,7 +29,7 @@ class Solver:
         self.antennas = []
         self.antennas_positions = {}
 
-        with open(f"{DIRPATH}\\data\\{file_name}.in", 'r') as f:
+        with open(f"{DIRPATH}\\data\\{file_name}.in", "r") as f:
             file_content = f.read().split("\n")
 
             # First line
@@ -48,7 +48,10 @@ class Solver:
 
             # Antennas
             id_antennas = 0
-            for i in range(2 + self.number_building, 2 + self.number_building + self.number_antennas):
+            for i in range(
+                2 + self.number_building,
+                2 + self.number_building + self.number_antennas,
+            ):
                 latency, connection = [int(x) for x in file_content[i].split(" ")]
                 self.antennas.append(Antenna(id_antennas, latency, connection))
                 id_antennas += 1
@@ -64,7 +67,6 @@ class Solver:
         for index, b in enumerate(self.buildings):
             if index < len(self.antennas):
                 self.antennas_positions[self.antennas[index].id] = (b.x, b.y)
-
 
     def to_output(self):
         with open(f".\\out\\{self.file_name}_out.txt", "w") as file:

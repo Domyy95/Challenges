@@ -41,7 +41,7 @@ class SolverDBScan:
         self.antennas = []
         self.antennas_positions = {}
 
-        with open(f"{DIRPATH}/data/{file_name}.in", 'r') as f:
+        with open(f"{DIRPATH}/data/{file_name}.in", "r") as f:
             file_content = f.read().split("\n")
 
             # First line
@@ -56,11 +56,16 @@ class SolverDBScan:
             # Buildings
             for i in range(2, 2 + self.number_building):
                 x, y, latency, connection = [int(x) for x in file_content[i].split(" ")]
-                self.buildings[str(x) + " " + str(y)] = (Building(x, y, latency, connection))
+                self.buildings[str(x) + " " + str(y)] = Building(
+                    x, y, latency, connection
+                )
 
             # Antennas
             id_antennas = 0
-            for i in range(2 + self.number_building, 2 + self.number_building + self.number_antennas):
+            for i in range(
+                2 + self.number_building,
+                2 + self.number_building + self.number_antennas,
+            ):
                 latency, connection = [int(x) for x in file_content[i].split(" ")]
                 self.antennas.append(Antenna(id_antennas, latency, connection))
                 id_antennas += 1
@@ -73,7 +78,7 @@ class SolverDBScan:
         antennas_for_cluster = [a for a in self.antennas if a.range > 0]
         antennas_for_single_buildings = [a for a in self.antennas if a.range == 0]
 
-        magic_value= 0
+        magic_value = 0
         if self.file_name == "b":
             magic_value = 50
         elif self.file_name == "c":
@@ -85,8 +90,12 @@ class SolverDBScan:
         elif self.file_name == "f":
             magic_value = 80
 
-        remaining_buildings = [b for b in self.buildings.values() if b.connection_s <= magic_value]
-        buildings_for_dbscan = [b for b in self.buildings.values() if b.connection_s > magic_value]
+        remaining_buildings = [
+            b for b in self.buildings.values() if b.connection_s <= magic_value
+        ]
+        buildings_for_dbscan = [
+            b for b in self.buildings.values() if b.connection_s > magic_value
+        ]
 
         c = {}
         X = np.array([[b.x, b.y] for b in buildings_for_dbscan])
@@ -115,7 +124,10 @@ class SolverDBScan:
         current_cluster = None
         for index, clu in enumerate(clusters):
             if index < len(antennas_for_cluster):
-                self.antennas_positions[antennas_for_cluster[index].id] = (clu.centroid_x, clu.centroid_y)
+                self.antennas_positions[antennas_for_cluster[index].id] = (
+                    clu.centroid_x,
+                    clu.centroid_y,
+                )
             else:
                 current_cluster = index
                 break
@@ -140,7 +152,10 @@ class SolverDBScan:
             if index >= len(remaining_buildings):
                 break
             b = remaining_buildings[index]
-            self.antennas_positions[antennas_for_single_buildings[index].id] = (b.x, b.y)
+            self.antennas_positions[antennas_for_single_buildings[index].id] = (
+                b.x,
+                b.y,
+            )
 
     def to_output(self):
         with open(f"./out/{self.file_name}_out.txt", "w") as file:

@@ -80,13 +80,17 @@ class Problem:
             end_intersection = int(line[1])
             street_name = line[2]
             travel_time = int(line[3])
-            self.streets[street_name] = Street(start_intersection, end_intersection, street_name, travel_time)
+            self.streets[street_name] = Street(
+                start_intersection, end_intersection, street_name, travel_time
+            )
 
         counter = 0
-        for i in range(1 + self.number_streets, 1 + self.number_streets + self.number_of_cars):
+        for i in range(
+            1 + self.number_streets, 1 + self.number_streets + self.number_of_cars
+        ):
             line = content[i].split(" ")
             number_streets = int(line[0])
-            streets = content[i][1 + len(str(number_streets)):].split(" ")
+            streets = content[i][1 + len(str(number_streets)) :].split(" ")
             new_streets = []
             for s in streets:
                 new_streets.append(self.streets[s])
@@ -96,22 +100,23 @@ class Problem:
         return
 
     def create_data_structure(self):
-
         for i in range(self.number_intersections):
             self.intersections[i] = Intersection(i)
 
         for s in self.streets.values():
             self.intersections[s.start_intersection].outbound[s.end_intersection] = {
                 "street_name": s.street_name,
-                "travel_time": s.travel_time
+                "travel_time": s.travel_time,
             }
 
-            self.intersections[s.end_intersection].incoming_streets.append(s.street_name)
+            self.intersections[s.end_intersection].incoming_streets.append(
+                s.street_name
+            )
 
             self.intersections[s.end_intersection].incoming[s.street_name] = {
                 "queue": [],
                 "street_name": s.street_name,
-                "intersection": s.start_intersection
+                "intersection": s.start_intersection,
             }
 
         for i in self.intersections.values():
@@ -141,12 +146,11 @@ class Problem:
         transferring_cars = {}
 
         for t in range(self.duration):
-
             if transferring_cars.get(t) is not None:
                 for c in transferring_cars[t]:
-                    self.intersections[c.get_arriving_intersection()] \
-                        .incoming[c.get_current_street().street_name]["queue"] \
-                        .append(c)
+                    self.intersections[c.get_arriving_intersection()].incoming[
+                        c.get_current_street().street_name
+                    ]["queue"].append(c)
 
             for i in self.intersections.values():
                 car = i.best_path()
@@ -155,9 +159,18 @@ class Problem:
                     if car.is_finished():
                         del car
                     else:
-                        if transferring_cars.get(t + car.get_current_street().travel_time) is None:
-                            transferring_cars[t + car.get_current_street().travel_time] = []
-                        transferring_cars[t + car.get_current_street().travel_time].append(car)
+                        if (
+                            transferring_cars.get(
+                                t + car.get_current_street().travel_time
+                            )
+                            is None
+                        ):
+                            transferring_cars[
+                                t + car.get_current_street().travel_time
+                            ] = []
+                        transferring_cars[
+                            t + car.get_current_street().travel_time
+                        ].append(car)
 
         print()
 
@@ -202,11 +215,11 @@ class Problem:
 
 
 def parse_input(file_name):
-    with open(f"{DIRPATH}\\data\\{file_name}.txt", 'r') as f:
+    with open(f"{DIRPATH}\\data\\{file_name}.txt", "r") as f:
         return Problem(f.read())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     problem = parse_input(sys.argv[1])
     problem.create_data_structure()
     # problem.emulate()

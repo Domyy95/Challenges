@@ -14,7 +14,7 @@ class Intersection:
         self.id = id
         self.incoming = []
         self.outbound = []
-        self.queues = {}   # 1 queue for each incoming
+        self.queues = {}  # 1 queue for each incoming
 
     def add_car(self, car):
         self.queues[car.actual_street].append(car)
@@ -40,12 +40,14 @@ class Intersection:
         else:
             return street_inc
 
+
 class Street:
     def __init__(self, s_i, e_i, s_n, t_t):
         self.start_intersection = s_i
         self.end_intersection = e_i
         self.street_name = s_n
         self.travel_time = t_t
+
 
 class Car:
     def __init__(self, id, n_s, s, step, next_intersection):
@@ -67,6 +69,7 @@ class Car:
     def traffic_light(self):
         return True if self.step == self.last_step else False
 
+
 class Solution:
     def __init__(self):
         self.intersections = 0
@@ -78,6 +81,7 @@ class Solution:
             self.intersections_traffic_light_green[id] = []
 
         self.intersections_traffic_light_green[id].append((street, time))
+
 
 class Problem:
     def __init__(self, file_content):
@@ -94,7 +98,6 @@ class Problem:
         self.cars = {}
         self.intersections = {}
 
-
         self.solution = Solution()
 
         for i in range(self.number_intersections):
@@ -106,20 +109,38 @@ class Problem:
             end_intersection = int(line[1])
             street_name = line[2]
             travel_time = int(line[3])
-            self.streets[street_name] = Street(start_intersection, end_intersection, street_name, travel_time)
+            self.streets[street_name] = Street(
+                start_intersection, end_intersection, street_name, travel_time
+            )
 
-            self.intersections[self.streets[street_name].start_intersection].outbound.append(street_name)
-            self.intersections[self.streets[street_name].end_intersection].incoming.append(street_name)
-            self.intersections[self.streets[street_name].end_intersection].queues[street_name] = []
+            self.intersections[
+                self.streets[street_name].start_intersection
+            ].outbound.append(street_name)
+            self.intersections[
+                self.streets[street_name].end_intersection
+            ].incoming.append(street_name)
+            self.intersections[self.streets[street_name].end_intersection].queues[
+                street_name
+            ] = []
 
         counter = 0
-        for i in range(1 + self.number_streets, 1 + self.number_streets + self.number_of_cars):
+        for i in range(
+            1 + self.number_streets, 1 + self.number_streets + self.number_of_cars
+        ):
             line = content[i].split(" ")
             number_streets = int(line[0])
-            streets = content[i][1 + len(str(number_streets)):].split(" ")
+            streets = content[i][1 + len(str(number_streets)) :].split(" ")
             next_intersection = self.streets[streets[0]].end_intersection
-            self.cars[counter] = Car(counter, number_streets, streets, self.streets[streets[0]].travel_time, next_intersection)
-            self.intersections[self.streets[streets[0]].end_intersection].add_car(self.cars[counter])
+            self.cars[counter] = Car(
+                counter,
+                number_streets,
+                streets,
+                self.streets[streets[0]].travel_time,
+                next_intersection,
+            )
+            self.intersections[self.streets[streets[0]].end_intersection].add_car(
+                self.cars[counter]
+            )
             counter += 1
 
         return
@@ -129,7 +150,11 @@ class Problem:
 
     def solve(self):
         for t in range(0, self.duration):
-            traffic_lights_to_manage = [self.intersections[i].id for i in self.intersections if self.intersections[i].someone_in_queue()]
+            traffic_lights_to_manage = [
+                self.intersections[i].id
+                for i in self.intersections
+                if self.intersections[i].someone_in_queue()
+            ]
 
             for traffic_light in traffic_lights_to_manage:
                 green = self.intersections[traffic_light].find_who_shall_pass()
@@ -138,18 +163,17 @@ class Problem:
 
     def to_output(self):
         problem_name = "a"
-        shutil.make_archive(f"{problem_name}_{time.time()}", 'zip')
+        shutil.make_archive(f"{problem_name}_{time.time()}", "zip")
         return
 
 
 def parse_input(file_name):
-    with open(f"{DIRPATH}/data/{file_name}.txt", 'r') as f:
+    with open(f"{DIRPATH}/data/{file_name}.txt", "r") as f:
         return Problem(f.read())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     problem = parse_input(sys.argv[1])
     problem.solve()
 
     # problem.to_output()
-
