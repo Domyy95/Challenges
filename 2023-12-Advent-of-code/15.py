@@ -170,7 +170,6 @@ for step in inputs:
 
         else:
             boxes[box].append(label)
-        
 
     if "-" in step:
         label = step[:-1]
