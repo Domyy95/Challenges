@@ -20,30 +20,40 @@ The next password after ghijklmn is ghjaabcc, because you eventually skip all th
 Given Santa's current password (your puzzle input), what should his next password be?
 """
 
+"""Problem 2
+Santa's password expired again. What's the next one?
+"""
+
 input = "hxbxwxba"
 
 not_allowed = ["i", "o", "l"]
 
+
 def increment_password(password):
     """Increment the password like counting in base-26."""
-    password = list(password) 
+    password = list(password)
     for i in range(len(password) - 1, -1, -1):
-        if password[i] == 'z':
-            password[i] = 'a'
+        if password[i] == "z":
+            password[i] = "a"
         else:
             password[i] = chr(ord(password[i]) + 1)
             break
-    return ''.join(password)
+    return "".join(password)
+
 
 def has_straight(password):
     """Check for at least one increasing straight of three letters."""
     for i in range(len(password) - 2):
-        if ord(password[i]) + 1 == ord(password[i + 1]) and ord(password[i]) + 2 == ord(password[i + 2]):
+        if ord(password[i]) + 1 == ord(password[i + 1]) and ord(password[i]) + 2 == ord(
+            password[i + 2]
+        ):
             return True
     return False
 
+
 def has_no_invalid_chars(password):
     return all(c not in password for c in not_allowed)
+
 
 def has_two_pairs(password):
     """Check for at least two different, non-overlapping pairs of letters."""
@@ -52,15 +62,19 @@ def has_two_pairs(password):
     while i < len(password) - 1:
         if password[i] == password[i + 1]:
             pairs.add(password[i])
-            i += 2 
+            i += 2
         else:
             i += 1
     return len(pairs) >= 2
 
+
 def is_valid_password(password):
-    return (has_straight(password) and
-            has_no_invalid_chars(password) and
-            has_two_pairs(password))
+    return (
+        has_straight(password)
+        and has_no_invalid_chars(password)
+        and has_two_pairs(password)
+    )
+
 
 def find_next_password(current_password):
     password = increment_password(current_password)
@@ -68,10 +82,9 @@ def find_next_password(current_password):
         password = increment_password(password)
     return password
 
+
 next_password = find_next_password(input)
 print("Solution 1: ", next_password)
 
 next_password = find_next_password(next_password)
 print("Solution 2: ", next_password)
-
-
