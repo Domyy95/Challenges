@@ -1,4 +1,4 @@
-""" Problem 1
+"""Problem 1
 You do see a lot of ash and igneous rock; there are even what look like gray mountains scattered around. After a while, you make your way to a nearby cluster of mountains only to discover that the valley between them is completely full of large mirrors. Most of the mirrors seem to be aligned in a consistent way; perhaps you should head in that direction?
 
 As you move through the valley of mirrors, you find that several of them have fallen from the large metal frames keeping them in place. The mirrors are extremely flat and shiny, and many of the fallen mirrors have lodged into the ash at strange angles. Because the terrain is all one color, it's hard to tell where it's safe to walk or where you're about to run into a mirror.
@@ -27,7 +27,7 @@ To find the reflection in each pattern, you need to find a perfect reflection ac
 In the first pattern, the reflection is across a vertical line between two columns; arrows on each of the two columns point at the line between the columns:
 
 123456789
-    ><   
+    ><
 #.##..##.
 ..#.##.#.
 ##......#
@@ -35,7 +35,7 @@ In the first pattern, the reflection is across a vertical line between two colum
 ..#.##.#.
 ..##..##.
 #.#.##.#.
-    ><   
+    ><
 123456789
 In this pattern, the line of reflection is the vertical line between columns 5 and 6. Because the vertical line is not perfectly in the middle of the pattern, part of the pattern (column 1) has nowhere to reflect onto and can be ignored; every other column has a reflected column within the pattern and must match exactly: column 2 matches column 9, column 3 matches 8, 4 matches 7, and 5 matches 6.
 

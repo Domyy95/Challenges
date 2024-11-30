@@ -1,4 +1,4 @@
-""" Problem 1 
+"""Problem 1
 The researcher has collected a bunch of data and compiled the data into a single giant image (your puzzle input). The image includes empty space (.) and galaxies (#). For example:
 
 ...#......

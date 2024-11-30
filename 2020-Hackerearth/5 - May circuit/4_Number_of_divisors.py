@@ -1,6 +1,6 @@
 # Problem Statement: https://www.hackerearth.com/challenges/competitive/may-circuits-20/algorithm/k-excess-1-be669e5a/
 """
-You are given two numbers n and k. For each number in the interval [1, n], your task is to calculate its largest divisor that is 
+You are given two numbers n and k. For each number in the interval [1, n], your task is to calculate its largest divisor that is
 not divisible by k. Print the sum of these divisors.
 
 Note: k is a prime number.

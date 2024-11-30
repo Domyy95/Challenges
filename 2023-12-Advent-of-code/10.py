@@ -1,4 +1,4 @@
-""" Problem 1
+"""Problem 1
 Scanning the area, you discover that the entire field you're standing on is densely packed with pipes; it was hard to tell at first because they're the same metallic silver color as the "ground". You make a quick sketch of all of the surface pipes you can see (your puzzle input).
 
 The pipes are arranged in a two-dimensional grid of tiles:
