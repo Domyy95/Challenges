@@ -141,7 +141,7 @@ def calc_energized(grid, start):
 
 # row -1 because its like you start outside the grid
 solution1 = calc_energized(grid, (0, -1, 0, 1))
-print(f"Solution 1", solution1)
+print(f"Solution 1: ", solution1)
 
 solution2 = 0
 for row in range(len(grid)):
@@ -158,4 +158,4 @@ for col in range(len(grid[0])):
         calc_energized(grid, (len(grid), col, -1, 0)),
     )
 
-print(f"Solution 2", solution2)
+print(f"Solution 2: ", solution2)
