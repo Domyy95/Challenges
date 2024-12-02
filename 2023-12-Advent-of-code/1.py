@@ -31,7 +31,7 @@ def extract_calibration_value_numbers(word):
     return calibration_value
 
 
-""" Problem 2
+"""Problem 2
 Your calculation isn't quite right. It looks like some of the digits are actually spelled out with letters: one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
 """
 spelled_numbers = [

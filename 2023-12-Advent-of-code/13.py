@@ -55,7 +55,7 @@ To summarize your pattern notes, add up the number of columns to the left of eac
 Find the line of reflection in each of the patterns in your notes. What number do you get after summarizing all of your notes?
 """
 
-""" Problem 2
+"""Problem 2
 You resume walking through the valley of mirrors and - SMACK! - run directly into one. Hopefully nobody was watching, because that must have been pretty embarrassing.
 
 Upon closer inspection, you discover that every mirror has exactly one smudge: exactly one . or # should be the opposite type.

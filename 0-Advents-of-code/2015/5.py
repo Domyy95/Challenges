@@ -16,7 +16,7 @@ dvszwmarrgswjxmb is naughty because it contains only one vowel.
 How many strings are nice?
 """
 
-""" Problem 2
+"""Problem 2
 Realizing the error of his ways, Santa has switched to a better model of determining whether a string is naughty or nice. None of the old rules apply, as they are all clearly ridiculous.
 
 Now, a nice string is one with all of the following properties:

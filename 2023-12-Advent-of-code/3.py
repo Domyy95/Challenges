@@ -1,6 +1,6 @@
 import string
 
-""" Problem 1
+"""Problem 1
 The engine schematic (your puzzle input) consists of a visual representation of the engine. There are lots of numbers and symbols you don't really understand, but apparently any number adjacent to a symbol, even diagonally, is a "part number" and should be included in your sum. (Periods (.) do not count as a symbol.)
 
 Here is an example engine schematic:
@@ -66,7 +66,7 @@ def solve_matrix_sum(matrix, symbols):
     return solution
 
 
-""" Problem 2
+"""Problem 2
 The missing part wasn't the only issue - one of the gears in the engine is wrong. A gear is any * symbol that is adjacent to exactly two part numbers. Its gear ratio is the result of multiplying those two numbers together.
 
 This time, you need to find the gear ratio of every gear and add them all up so that the engineer can figure out which gear needs to be replaced.

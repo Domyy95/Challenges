@@ -1,6 +1,6 @@
 import math
 
-""" Problem 1
+"""Problem 1
 The ferry quickly brings you across Island Island. After asking around, you discover that there is indeed normally a large pile of sand somewhere near here, but you don't see anything besides lots of water and the small island where the ferry has docked.
 As you try to figure out what to do next, you notice a poster on a wall near the ferry dock. "Boat races! Open to the public! Grand prize is an all-expenses-paid trip to Desert Island!" That must be where the sand comes from! Best of all, the boat races are starting in just a few minutes.
 You manage to sign up as a competitor in the boat races just in time. The organizer explains that it's not really a traditional race - instead, you will get a fixed amount of time during which your boat has to travel as far as it can, and you win if your boat goes the farthest.
@@ -38,7 +38,7 @@ To see how much margin of error you have, determine the number of ways you can b
 Determine the number of ways you could beat the record in each race. What do you get if you multiply these numbers together?
 """
 
-""" Problem 2
+"""Problem 2
 As the race is about to start, you realize the piece of paper with race times and record distances you got earlier actually just has very bad kerning. There's really only one race - ignore the spaces between the numbers on each line.
 
 So, the example from before:
