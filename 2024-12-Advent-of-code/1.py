@@ -64,6 +64,7 @@ Once again consider your left and right lists. What is their similarity score?
 
 from collections import Counter
 
+
 def compute_total_distance(left_list, right_list):
     left_list.sort()
     right_list.sort()
@@ -74,6 +75,7 @@ def compute_total_distance(left_list, right_list):
 
     return total_distance
 
+
 def compute_similarity_score(left_list, right_list):
     right_count = Counter(right_list)
 
@@ -82,6 +84,7 @@ def compute_similarity_score(left_list, right_list):
         similarity_score += num * right_count[num]
 
     return similarity_score
+
 
 left_list = []
 right_list = []
