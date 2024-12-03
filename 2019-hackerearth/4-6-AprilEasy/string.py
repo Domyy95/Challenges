@@ -1,3 +1,10 @@
+"""
+A string s is called a good string if and only if two consecutive letters are not the same. For example, abcab and  cda are 
+good while abaa and accba are not.
+You are given a string s. Among all the good substrings of s,print the size of the longest one.
+"""
+
+
 NO_OF_CHARS = 256
 
 
