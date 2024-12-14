@@ -37,20 +37,21 @@ Given the recording in your puzzle input and this new decoding methodology, what
 """
 
 with open("inputs/6.txt") as f:
-    rooms = f.read().splitlines()
+    messages = f.read().splitlines()
 
 
-def get_most_common_char(rooms):    
-    most_common = []
-    for i in range(len(rooms[0])):
-        char_count = {}
-        for room in rooms:
-            if room[i] in char_count:
-                char_count[room[i]] += 1
-            else:
-                char_count[room[i]] = 1
-        most_common.append(max(char_count, key=char_count.get))
-    return "".join(most_common)
+most_common = ""
+least_common = ""
+for i in range(len(messages[0])):
+    char_count = {}
+    for room in messages:
+        if room[i] in char_count:
+            char_count[room[i]] += 1
+        else:
+            char_count[room[i]] = 1
+    most_common += max(char_count, key=char_count.get)
+    least_common += min(char_count, key=char_count.get)
 
-print("Solution 1:", get_most_common_char(rooms))
 
+print("Solution 1:", most_common)
+print("Solution 2:", least_common)
