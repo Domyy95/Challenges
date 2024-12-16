@@ -54,5 +54,5 @@ for line in input:
             if i != j and a % b == 0:
                 result += a // b
                 break
-            
+
 print("Solution 2:", result)
